@@ -1,42 +1,57 @@
 package models;
 
-public class Customer {
-    private String name;
-    private String date;
+public class Customer implements Comparable<Customer> {
+    private String fullName;
+    private String dateOfBirth;
     private String gender;
-    private int passport;
-    private int number;
+    private String idCard;
+    private String phoneNumber;
     private String email;
-    private String type;
+    private String typeOfCustomer;
     private String address;
     private Services services;
 
-    public Customer(String name, String date, String gender, int passport, int number, String email, String type, String address, Services services) {
-        this.name = name;
-        this.date = date;
+    public Customer() {
+
+    }
+
+    public Customer(String fullName, String dateOfBirth, String gender, String idCard, String phoneNumber, String email, String typeOfCustomer, String address, Services services) {
+        this.fullName = fullName;
+        this.dateOfBirth = dateOfBirth;
         this.gender = gender;
-        this.passport = passport;
-        this.number = number;
+        this.idCard = idCard;
+        this.phoneNumber = phoneNumber;
         this.email = email;
-        this.type = type;
+        this.typeOfCustomer = typeOfCustomer;
         this.address = address;
         this.services = services;
     }
 
-    public String getName() {
-        return name;
+    public Customer(String fullName, String dateOfBirth, String gender, String idCard, String phoneNumber, String email, String typeOfCustomer, String address) {
+        this.fullName = fullName;
+        this.dateOfBirth = dateOfBirth;
+        this.gender = gender;
+        this.idCard = idCard;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.typeOfCustomer = typeOfCustomer;
+        this.address = address;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getFullName() {
+        return fullName;
     }
 
-    public String getDate() {
-        return date;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public String getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 
     public String getGender() {
@@ -47,20 +62,20 @@ public class Customer {
         this.gender = gender;
     }
 
-    public int getPassport() {
-        return passport;
+    public String getIdCard() {
+        return idCard;
     }
 
-    public void setPassport(int passport) {
-        this.passport = passport;
+    public void setIdCard(String idCard) {
+        this.idCard = idCard;
     }
 
-    public int getNumber() {
-        return number;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setNumber(int number) {
-        this.number = number;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getEmail() {
@@ -71,12 +86,12 @@ public class Customer {
         this.email = email;
     }
 
-    public String getType() {
-        return type;
+    public String getTypeOfCustomer() {
+        return typeOfCustomer;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setTypeOfCustomer(String typeOfCustomer) {
+        this.typeOfCustomer = typeOfCustomer;
     }
 
     public String getAddress() {
@@ -98,15 +113,32 @@ public class Customer {
     @Override
     public String toString() {
         return "Customer{" +
-                "name='" + name + '\'' +
-                ", date='" + date + '\'' +
+                "fullName='" + fullName + '\'' +
+                ", dateOfBirth='" + dateOfBirth + '\'' +
                 ", gender='" + gender + '\'' +
-                ", passport=" + passport +
-                ", number=" + number +
+                ", idCard=" + idCard +
+                ", phoneNumber=" + phoneNumber +
                 ", email='" + email + '\'' +
-                ", type='" + type + '\'' +
+                ", typeOfCustomer='" + typeOfCustomer + '\'' +
                 ", address='" + address + '\'' +
                 ", services=" + services +
                 '}';
+    }
+
+    public void showInfor() {
+        System.out.println(this.toString());
+    }
+
+    @Override
+    public int compareTo(Customer second) {
+        int result = this.fullName.compareTo(second.fullName);
+
+        if (result == 0) {
+
+            int yearCustomerFirst = Integer.parseInt(this.dateOfBirth.split("/")[2]);
+            int yearCustomerSecond = Integer.parseInt(second.dateOfBirth.split("/")[2]);
+            result = yearCustomerFirst - yearCustomerSecond;
+        }
+        return result;
     }
 }

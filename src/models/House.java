@@ -5,6 +5,10 @@ public class House extends Services {
     private String convenient;
     private int numberFloor;
 
+    public House(){
+
+    }
+
     public House(String id, String nameService, double areaUsed, double rentCosts, int maxPeople, String rentalType, String standardRoom, String convenient, int numberFloor) {
         super(id, nameService, areaUsed, rentCosts, maxPeople, rentalType);
         this.standardRoom = standardRoom;
@@ -37,15 +41,16 @@ public class House extends Services {
     }
 
     @Override
+    public void showInfor() {
+        System.out.println(this.toString());
+    }
+
+    @Override
     public String toString() {
-        return  super.getId() + "," +
-                super.getNameService() + "," +
-                super.getAreaUsed() + ","+
-                super.getRentCosts()+ "," +
-                super.getMaxPeople() + ","+
-                super.getRentalType() + "," +
-                standardRoom + "," +
-                convenient + "," +
-                numberFloor;
+        return "House{" +
+                "standardRoom='" + standardRoom + '\'' +
+                ", convenient='" + convenient + '\'' +
+                ", numberFloor=" + numberFloor +
+                '}'+super.toString();
     }
 }

@@ -1,12 +1,15 @@
 package models;
 
 public abstract class Services {
-    private String id;
-    private String nameService;
-    private double areaUsed;
-    private double rentCosts;
-    private int maxPeople;
-    private String rentalType;
+    protected String id;
+    protected String nameService;
+    protected double areaUsed;
+    protected double rentCosts;
+    protected int maxPeople;
+    protected String rentalType;
+
+    public Services() {
+    }
 
     public Services(String id, String nameService, double areaUsed, double rentCosts, int maxPeople, String rentalType) {
         this.id = id;
@@ -65,14 +68,17 @@ public abstract class Services {
         this.rentalType = rentalType;
     }
 
+    public abstract void showInfor();
+
     @Override
     public String toString() {
-        return  id + "," +
-                nameService + "," +
-                areaUsed + ","+
-                rentCosts + ","+
-                maxPeople+ "," +
-                rentalType;
-
+        return "Services{" +
+                "id='" + id + '\'' +
+                ", nameService='" + nameService + '\'' +
+                ", areaUsed=" + areaUsed +
+                ", rentCosts=" + rentCosts +
+                ", maxPeople=" + maxPeople +
+                ", rentalType='" + rentalType + '\'' +
+                '}';
     }
 }
