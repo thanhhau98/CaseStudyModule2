@@ -15,11 +15,6 @@ public class StringUtils {
         return outString.toString();
     }
 
-    public static void main(String[] args) {
-        String[] content = {"1","2","3"};
-        String resylt = StringUtils.concat(content,",");
-        System.out.println(resylt);
-    }
 }
 
 

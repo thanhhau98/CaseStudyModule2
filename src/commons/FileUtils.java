@@ -31,7 +31,7 @@ public class FileUtils {
         try {
             bufferedReader = new BufferedReader(new FileReader(path));
 
-            String line = null;
+            String line ;
 
             while ((line = bufferedReader.readLine()) != null) {
                 arrayContent.add(line);

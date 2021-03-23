@@ -1,15 +1,13 @@
 package controllers;
 
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import commons.*;
 import exceptions.*;
 import models.*;
-
-import java.io.File;
 import java.util.*;
 
 public class MainController {
 
+    private final String EMPLOYEE ="employee" ;
     private final String BOOKING = "booking" ;
     private final Scanner scanner = new Scanner(System.in);
     private final String VILLA = "villa";
@@ -33,6 +31,7 @@ public class MainController {
                     "4.\tShow Information of Customer\n" +
                     "5.\tAdd New Booking\n" +
                     "6.\tShow Information of Employee\n" +
+                    "7.\tShow queue of customer\n" +
                     "0.\tExit\n");
             System.out.println("Enter number (1-6):");
             choose = scanner.nextInt();
@@ -58,8 +57,12 @@ public class MainController {
                 case 0:
                     isExit = true;
                     break;
+                case 7:
+                    showQueueOfCustomer();
+                    break;
                 default:
                     displayMainMenu();
+
             }
 
             if (isExit) {
@@ -69,7 +72,54 @@ public class MainController {
         } while (choose >= 0 && choose <= 6);
     }
 
+    private void showQueueOfCustomer() {
+        Queue<Customer> queueCustomer = new LinkedList<>();
+        List<Customer> customerList =readAllCustomer(CUSTOMER);
+
+        showInformationOfCustomer(CUSTOMER);
+
+        queueCustomer.add(customerList.get(1));
+        queueCustomer.add(customerList.get(2));
+        queueCustomer.add(customerList.get(3));
+
+        Customer customer ;
+
+        System.out.println("--------------------------------");
+        System.out.println("List customner buy ticket: ");
+        while (!queueCustomer.isEmpty()){
+            customer =queueCustomer.poll();
+            customer.showInfor();
+        }
+    }
+
+    private Map<String,Employee> readAllEmployee(String fileName){
+        FileUtils.setFullPathFile(fileName);
+        List<String> propertiesEmployee = FileUtils.readFile();
+        Map<String,Employee> mapOfEmployee = new HashMap<>();
+        String[] arrayPropertiesEmployee ;
+        Employee employee ;
+
+        for (String properties : propertiesEmployee){
+            arrayPropertiesEmployee = properties.split(StringUtils.COMMA);
+            employee= new Employee();
+            employee.setEmployeeId(arrayPropertiesEmployee[0]);
+            employee.setEmployeeName(arrayPropertiesEmployee[1]);
+            employee.setEmployeeDateOfBirth(arrayPropertiesEmployee[2]);
+            employee.setEmployeeAddress(arrayPropertiesEmployee[3]);
+
+            mapOfEmployee.put(employee.getEmployeeId(),employee);
+        }
+        return mapOfEmployee;
+    }
     private void showInformationOfEmployee() {
+        Map<String,Employee> mapOfEmployee = readAllEmployee(EMPLOYEE);
+
+        System.out.println("--------------------------------");
+        System.out.println("List Employee: ");
+
+        for (Map.Entry<String,Employee> employeeEntry :mapOfEmployee.entrySet()){
+            System.out.println(employeeEntry.getKey()+" "+ employeeEntry.getValue().toString());
+        }
     }
 
     private void addNewBooking() {
@@ -122,7 +172,7 @@ public class MainController {
         System.out.println("List customer ");
          List<Customer> customerList=readAllCustomer(fileName);
 
-         Customer customer = null;
+         Customer customer ;
         for (int i=0;i < customerList.size(); i++) {
             customer =customerList.get(i);
             System.out.println((i+1)+". ");
@@ -135,8 +185,8 @@ public class MainController {
         FileUtils.setFullPathFile(fileName);
         List<String> propertiesCustomer = FileUtils.readFile();
         List<Customer> listOfCustomer = new ArrayList<>();
-        String[] arrPropertyCustomer = null;
-        Customer customer = null;
+        String[] arrPropertyCustomer ;
+        Customer customer ;
 
         for (String properties : propertiesCustomer) {
             arrPropertyCustomer = properties.split(StringUtils.COMMA);
@@ -149,7 +199,6 @@ public class MainController {
             customer.setEmail(arrPropertyCustomer[5]);
             customer.setTypeOfCustomer(arrPropertyCustomer[6]);
             customer.setAddress(arrPropertyCustomer[7]);
-
             listOfCustomer.add(customer);
         }
         Collections.sort(listOfCustomer);
@@ -220,7 +269,6 @@ public class MainController {
         System.out.println(" Please input phoneNumber :");
         String phoneNumber = scanner.nextLine();
 
-        scanner.nextLine();
         String email;
         do {
             flag = true;
@@ -355,7 +403,7 @@ public class MainController {
                 double numberFloor;
                 do {
                     System.out.println("Please input number floor:");
-                    numberFloor = scanner.nextDouble();
+                    numberFloor = scanner.nextInt();
                 } while (!Validators.isMoreThan(numberFloor, 0));
 
                 FileUtils.writeFile(new String[]{id, nameService, String.valueOf(areaUsed), String.valueOf(rentCost), String.valueOf(maxPeople), rentalType,
@@ -380,7 +428,7 @@ public class MainController {
                 double numberFloor;
                 do {
                     System.out.println("Please input number floor:");
-                    numberFloor = scanner.nextDouble();
+                    numberFloor = scanner.nextInt();
                 } while (!Validators.isMoreThan(numberFloor, 0));
 
                 FileUtils.writeFile(new String[]{id, nameService, String.valueOf(areaUsed), String.valueOf(rentCost), String.valueOf(maxPeople), rentalType,
@@ -483,7 +531,7 @@ public class MainController {
         System.out.println("--------------------------------------");
         System.out.println("List services:");
          List<Services> servicesList =readAllService(fileName);
-         Services services =null;
+         Services services ;
         for (int i=0;i< servicesList.size();i++ ) {
             services = servicesList.get(i);
             System.out.println((i+1)+". ");
